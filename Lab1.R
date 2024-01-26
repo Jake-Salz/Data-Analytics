@@ -40,6 +40,8 @@ lines(density(DALY,na.rm=TRUE,bw=1.))
 rug(DALY)
 
 plot(ecdf(DALY), do.points=FALSE, verticals=TRUE)
+qqnorm(DALY)
+qqline(DALY)
 y<-seq(0,95,1)
 qqplot(qt(ppoints(250),df=5), y, xlab = "Q-Q plot for t dsn (DALY)")
 qqline(y)
@@ -86,5 +88,59 @@ boxplot(WATER_H_SUBSAHARAN_AFRICA,WATER_H_US)
 
 
 #other data
-GRUMP_data <- read.csv(”<path>/GPW3_GRUMP_SummaryInformation_2010.csv")
+GRUMP_data <- read.csv(file.choose(),header=T)
+View(GRUMP_data)
 
+PopulationPerUnit = GRUMP_data$PopulationPerUnit
+PopulationPerUnit
+PPUnit = PopulationPerUnit[!is.na(PopulationPerUnit)]
+hist(PPUnit)
+fivenum(PPUnit)
+summary(PPUnit)
+x = seq(0,2658,5)
+qqnorm(PPUnit)
+qqline(PPUnit)
+qqplot(qt(ppoints(250),df=5),x,xlab="Q-Q plot for t dsn (Population Per Unit)")
+hist(PPUnit, seq(0.,2660.,5.0),prob=TRUE)
+lines(density(PPUnit))
+
+
+Area = GRUMP_data$Area
+Area = as.integer(Area)
+Area = Area[!is.na(Area)]
+Area
+summary(Area)
+hist(Area)
+hist(Area,breaks=100)
+lines(frequency(Area))
+rug(Area)
+z = seq(1,1668000,100)
+qqnorm(Area)
+qqline(Area)
+qqplot(qt(ppoints(250),df=5),z,xlab="Q-Q plot for t dsn (Area)")
+
+boxplot(Area,PPUnit)
+qqplot(Area,PPUnit)
+
+waterTreatment = read.csv(file.choose(), header=T)
+View(waterTreatment)
+PH_E = waterTreatment$PH.E
+PH_E
+summary(PH_E)
+hist(PH_E)
+hist(PH_E, seq(6.5,9.,0.1),prob=TRUE)
+plot(ecdf(PH_E),do.points=FALSE,verticals=TRUE)
+qqnorm(PH_E)
+qqline(PH_E)
+x = seq(6.5,9,0.1)
+help(qqplot)
+
+
+SS_P = waterTreatment$SS.P
+SS_P
+hist(SS_P)
+boxplot(SS_P)
+plot(ecdf(SS_P),do.points=FALSE,verticals=TRUE)
+summary(SS_P)
+qqnorm(SS_P)
+qqplot(SS_P,PH_E)
