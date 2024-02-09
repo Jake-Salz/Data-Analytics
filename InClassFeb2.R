@@ -25,3 +25,4 @@ mm<-lm(Immigrant~Income+Population+HP+PD)
 lm(formula=Immigrant~Income+Population+HP+PD)
 cm<-coef(mm)
 cm
+
